@@ -1,0 +1,25 @@
+﻿<Application x:Class="View.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:View"
+             xmlns:view="clr-namespace:View.Views" 
+             xmlns:ViewModel="clr-namespace:ViewModel;assembly=ViewModel">
+    <!--Verwijzing naar folder views-->
+    
+    <Application.Resources>
+        <!-- WPF BUG: Hier moeten minstens twee items gedeclareerd worden; als er
+                      slechts een item staat wordt dat niet opgepikt door WPF...   -->
+        <DataTemplate DataType="{x:Type ViewModel:StartWindow}">
+            <view:StartScreen  />
+            <!-- This is a UserControl -->
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:BoardViewModel}">
+            <view:GameControlScreen />
+            <!-- This is a UserControl -->
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type ViewModel:EndWindow}">
+            <view:EndScreen />
+            <!-- This is a UserControl -->
+        </DataTemplate>
+    </Application.Resources>
+</Application>

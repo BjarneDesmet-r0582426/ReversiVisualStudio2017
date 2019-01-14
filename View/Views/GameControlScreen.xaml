@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="View.Views.GameControlScreen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            
+             xmlns:ViewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             
+             xmlns:local="clr-namespace:View.Views"
+             mc:Ignorable="d" Height="1500" Width="1500">
+    <UserControl.Resources>
+        <ViewModel:PlayerColor x:Key="playercolor"/>
+        <local:TimeConverter x:Key="timeConverter" />
+    </UserControl.Resources>
+
+    <UserControl.Background>
+
+        <ImageBrush ImageSource="/images/beach-buildings-clouds-1154498.jpg"/>
+    </UserControl.Background>
+
+    <!--<UserControl.Background>
+        <ImageBrush ImageSource="images/3D-party.jpg" Stretch="UniformToFill"/>
+    </UserControl.Background>-->
+
+    <Grid  HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="0,-600,0,0" >
+
+
+
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <MediaElement Name="mediaElement" Source="C:\Users\Bjarne\Music\Downloaded by MediaHuman\Gunther - Ding Dong Song.mp3" />
+
+
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding Rows}" Grid.Row="0">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!-- Rows are arranged vertically -->
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding Squares}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <!-- Rows are arranged vertically -->
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Width="64" Height="64" BorderBrush="Black" BorderThickness="1" Margin="2" Command="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                            AncestorType={x:Type Window}}, Path=DataContext.SelectedOptionPane.ViewModel.Command}" CommandParameter="{Binding Positie}">
+                                    <!-- Hier wordt de parameter die de putstonecommandklasse vraagt aangeduid-->
+                                    <Ellipse Fill="{Binding speler, Converter={StaticResource playercolor}}" Height="50" Width="50"/>
+                                    <!-- binding gaat naar de huidige datacontext en zoekt daar de parameter/variabele die wordt meegegeven hier is dat positie-->
+                                </Button>
+                                <!-- Datacontext is de klasse naar waar hij gaat -->
+                            </DataTemplate>
+
+                        </ItemsControl.ItemTemplate>
+
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Grid Grid.Column="0" Background="Beige"  Grid.Row="0" HorizontalAlignment="Center" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" FontSize="30px" HorizontalAlignment="Center">Current Player</TextBlock>
+            <TextBlock Grid.Row="1" FontSize="30px" HorizontalAlignment="Center" Text="{Binding currentName}"/>
+            <TextBlock Grid.Row="2" FontSize="30px" HorizontalAlignment="Center" Text="{Binding playerNameOne}"/>
+            <TextBlock Grid.Column="0" Grid.Row="3" Text="{Binding black}"  HorizontalAlignment="Center" FontSize="30px"/>
+            <TextBlock Grid.Row="4" FontSize="30px" HorizontalAlignment="Center" Text="{Binding playerNameTwo}"/>
+            <TextBlock Grid.Column="0"  Grid.Row="5"  Text="{Binding white}" HorizontalAlignment="Center" FontSize="30px"/>
+            <Button Grid.Row="6"  Command="{Binding commandend}" >end game</Button>
+
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <TextBlock TextWrapping="Wrap" FontSize="20" TextAlignment="Center" Grid.Row="0" Foreground="White"> Time passed since the start of the application:</TextBlock>
+            <TextBlock  TextWrapping="Wrap"  Text="{Binding Milliseconds, Converter={StaticResource timeConverter}}" TextAlignment="Center" VerticalAlignment="Center" FontSize="100" Foreground="White"/>
+        </Grid>
+    </Grid>
+</UserControl>
